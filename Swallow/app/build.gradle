@@ -30,4 +30,6 @@ dependencies {
     compile project(':wishlist')
     compile project(':commons')
     compile project(':core')
+    compile 'com.google.code.gson:gson:2.4'
+    compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
 }
