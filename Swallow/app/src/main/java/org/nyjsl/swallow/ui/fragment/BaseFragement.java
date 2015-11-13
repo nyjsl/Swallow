@@ -2,11 +2,12 @@ package org.nyjsl.swallow.ui.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
@@ -17,15 +18,8 @@ import org.nyjsl.swallow.utils.ToastUtils;
 
 import butterknife.ButterKnife;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link BaseFragement.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link BaseFragement#newInstance} factory method to
- * create an instance of this fragment.
- */
-public  class BaseFragement extends Fragment  {
+
+public abstract class BaseFragement extends Fragment  {
 
 
 
@@ -41,10 +35,10 @@ public  class BaseFragement extends Fragment  {
      * this fragment using the provided parameters.
      * @return A new instance of fragment BaseFragement.
      */
-    public static BaseFragement newInstance() {
-        BaseFragement fragment = new BaseFragement();
-        return fragment;
-    }
+//    public static BaseFragement newInstance() {
+//        BaseFragement fragment = new BaseFragement();
+//        return fragment;
+//    }
 
 
     public BaseFragement() {
@@ -60,7 +54,10 @@ public  class BaseFragement extends Fragment  {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mContext = getActivity();
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
+
+        setListeners();
+        init();
     }
 
     @Override
@@ -73,6 +70,16 @@ public  class BaseFragement extends Fragment  {
         super.onSaveInstanceState(outState);
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(getFragmentLayout(),null);
+    }
+
+    protected  abstract  int getFragmentLayout();
+
+    protected abstract void init();
+
+    protected abstract void setListeners();
 
     /**
      * show system toast duration long
@@ -149,14 +156,21 @@ public  class BaseFragement extends Fragment  {
     public void onDestroy() {
         super.onDestroy();
         dismissProgressDialog();
-        dismissMaterialProgressDialog();
         ButterKnife.unbind(this);
+    }
+
+    protected void dismissProgressDialog() {
+        if(Swallow.Configuration.MATERIAL_DIALOG){
+            dismissMaterialProgressDialog();
+        }else {
+            dismissProgressDialogNormal();
+        }
     }
 
     /**
      * dismiss progressdialog
      */
-    protected void dismissProgressDialog(){
+    private void dismissProgressDialogNormal(){
         if(null == dialog ) return;
         if(dialog.isShowing()) getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -167,7 +181,7 @@ public  class BaseFragement extends Fragment  {
 
     }
 
-    protected void dismissMaterialProgressDialog() {
+    private void dismissMaterialProgressDialog() {
         if(null == materialDialog ) return;
         if(materialDialog.isShowing()) getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -183,19 +197,5 @@ public  class BaseFragement extends Fragment  {
         super.onDetach();
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
-    }
 
 }

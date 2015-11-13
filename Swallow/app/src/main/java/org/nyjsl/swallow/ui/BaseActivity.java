@@ -1,9 +1,12 @@
 package org.nyjsl.swallow.ui;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -15,7 +18,7 @@ import org.nyjsl.swallow.utils.ToastUtils;
 
 import butterknife.ButterKnife;
 
-public abstract class BaseActivity extends Activity  {
+public abstract class BaseActivity extends FragmentActivity {
 
     protected Context mContext = null;
 
@@ -23,12 +26,15 @@ public abstract class BaseActivity extends Activity  {
 
     private ProgressDialog dialog;
 
+    private FragmentManager supportFragmentManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
         setContentView(getContentLayout());
         ButterKnife.bind(this);
+        supportFragmentManager = getSupportFragmentManager();
         setListeners();
         init();
     }
@@ -42,6 +48,12 @@ public abstract class BaseActivity extends Activity  {
     protected abstract void setListeners();
 
     protected  abstract void init();
+
+    protected void replaceFragment(int containerId,Fragment fr) {
+        FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
+        fragmentTransaction.add(containerId, fr);
+        fragmentTransaction.commitAllowingStateLoss();
+    }
 
 
     @Override

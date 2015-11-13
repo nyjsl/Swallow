@@ -1,6 +1,5 @@
 package org.nyjsl.swallow.test;
 
-import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -15,16 +14,12 @@ import butterknife.OnClick;
 public class TestMainActivity extends BaseActivity {
 
 
-    @Bind(R.id.test_tv) TextView  textView;
+    @Bind(R.id.test_tv) TextView  test_tv;
     @Bind(R.id.tv_test) TextView  tv_test;
     @Bind(R.id.show)  Button show;
     @Bind(R.id.change) Button  change;
+    @Bind(R.id.duang) Button  duang;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
 
     @Override
     protected int getContentLayout() {
@@ -49,5 +44,9 @@ public class TestMainActivity extends BaseActivity {
     @OnClick(R.id.change)
     void change(){
         Swallow.Configuration.MATERIAL_DIALOG = !Swallow.Configuration.MATERIAL_DIALOG;
+    }
+    @OnClick(R.id.duang)
+    void duang(){
+        replaceFragment(R.id.container,TestFragment.newInstance());
     }
 }
