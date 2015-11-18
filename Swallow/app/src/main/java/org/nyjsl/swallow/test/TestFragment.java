@@ -12,7 +12,7 @@ import butterknife.OnClick;
 /**
  * Created by weix01 on 2015-11-13.
  */
-public class TestFragment  extends BaseFragement{
+public class TestFragment  extends BaseFragement {
 
     @Bind(R.id.test_tv) TextView  test_tv;
     @Bind(R.id.tv_test) TextView  tv_test;

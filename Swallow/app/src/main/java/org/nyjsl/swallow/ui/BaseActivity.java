@@ -12,13 +12,15 @@ import android.text.TextUtils;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import org.nyjsl.swallow.Swallow;
+import org.nyjsl.swallow.presenter.Presenter;
 import org.nyjsl.swallow.utils.DialogUtil;
 import org.nyjsl.swallow.utils.MaterialDialogUtil;
 import org.nyjsl.swallow.utils.ToastUtils;
+import org.nyjsl.swallow.views.BaseView;
 
 import butterknife.ButterKnife;
 
-public abstract class BaseActivity extends FragmentActivity {
+public abstract class BaseActivity extends FragmentActivity implements BaseView{
 
     protected Context mContext = null;
 
@@ -27,6 +29,8 @@ public abstract class BaseActivity extends FragmentActivity {
     private ProgressDialog dialog;
 
     private FragmentManager supportFragmentManager;
+
+    protected Presenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,41 @@ public abstract class BaseActivity extends FragmentActivity {
         supportFragmentManager = getSupportFragmentManager();
         setListeners();
         init();
+    }
+
+    /**
+     * sub class should call this method andd
+     * pass a sub Presenter
+     * @param presenter
+     */
+    protected void bindPresenter(Presenter presenter){
+        this.presenter = presenter;
+        presenter.attachView(this);
+    }
+
+    @Override
+    public void showD() {
+        showProgressDialog();
+    }
+
+    @Override
+    public Context getContext() {
+        return mContext;
+    }
+
+    @Override
+    public void showD(int id) {
+        showProgressDialog(id);
+    }
+
+    @Override
+    public void disD() {
+        dismissProgressDialog();
+    }
+
+    @Override
+    public void showT(int id) {
+        showToast(id);
     }
 
     /**
@@ -148,6 +187,18 @@ public abstract class BaseActivity extends FragmentActivity {
                 materialDialog.show();
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        presenter.start();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        presenter.stop();
     }
 
     @Override

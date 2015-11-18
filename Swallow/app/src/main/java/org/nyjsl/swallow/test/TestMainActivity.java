@@ -1,17 +1,21 @@
 package org.nyjsl.swallow.test;
 
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.nyjsl.swallow.R;
 import org.nyjsl.swallow.Swallow;
+import org.nyjsl.swallow.presenter.TestPresenter;
 import org.nyjsl.swallow.ui.BaseActivity;
+import org.nyjsl.swallow.views.TestMainView;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import retrofit.Callback;
 
 
-public class TestMainActivity extends BaseActivity {
+public class TestMainActivity extends BaseActivity implements TestMainView {
 
 
     @Bind(R.id.test_tv) TextView  test_tv;
@@ -20,6 +24,9 @@ public class TestMainActivity extends BaseActivity {
     @Bind(R.id.change) Button  change;
     @Bind(R.id.duang) Button  duang;
 
+    @Bind(R.id.avatar) ImageView avatar;
+
+    private TestPresenter presenter;
 
     @Override
     protected int getContentLayout() {
@@ -28,25 +35,34 @@ public class TestMainActivity extends BaseActivity {
 
 
     @Override
-    protected void setListeners() {
-
-    }
+    protected void setListeners() {}
 
     @Override
     protected void init() {
-        tv_test.setText("对呀,就是这么屌");
+
+        presenter = new TestPresenter();
+        bindPresenter(presenter);
+
     }
 
-    @OnClick(R.id.show)
-    void show(){
-        showProgressDialog();
-    }
     @OnClick(R.id.change)
     void change(){
         Swallow.Configuration.MATERIAL_DIALOG = !Swallow.Configuration.MATERIAL_DIALOG;
     }
     @OnClick(R.id.duang)
     void duang(){
-        replaceFragment(R.id.container,TestFragment.newInstance());
+        replaceFragment(R.id.container, TestFragment.newInstance());
     }
+
+    @Override
+    public void getUser(GitHubService service, String user, Callback<User> callback) {
+        presenter.requestUser(service, user, callback);
+    }
+
+    @Override
+    public void bindUser(User user) {
+        presenter.bindUserView(user,tv_test,avatar);
+    }
+
+
 }
