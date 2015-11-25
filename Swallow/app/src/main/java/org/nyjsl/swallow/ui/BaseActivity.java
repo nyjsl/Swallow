@@ -16,11 +16,11 @@ import org.nyjsl.swallow.presenter.Presenter;
 import org.nyjsl.swallow.utils.DialogUtil;
 import org.nyjsl.swallow.utils.MaterialDialogUtil;
 import org.nyjsl.swallow.utils.ToastUtils;
-import org.nyjsl.swallow.views.BaseView;
+import org.nyjsl.swallow.views.IBaseView;
 
 import butterknife.ButterKnife;
 
-public abstract class BaseActivity extends FragmentActivity implements BaseView{
+public abstract class BaseActivity extends FragmentActivity implements IBaseView {
 
     protected Context mContext = null;
 

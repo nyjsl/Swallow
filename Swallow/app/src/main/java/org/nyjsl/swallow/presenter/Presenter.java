@@ -1,14 +1,14 @@
 package org.nyjsl.swallow.presenter;
 
-import org.nyjsl.swallow.views.BaseView;
+import org.nyjsl.swallow.views.IBaseView;
 
 /**
  * Interface that represents a Presenter in the model view presenter Pattern
  * defines methods to manage the Activity / Fragment lifecycle
  */
-public abstract class Presenter {
+public abstract class Presenter<IV extends IBaseView> {
 
-    protected BaseView mView ;
+    protected IV mView ;
 
     /**
      * Called when the presenter is initialized
@@ -21,7 +21,7 @@ public abstract class Presenter {
      */
     public abstract void stop ();
 
-    public  void attachView(BaseView view){
+    public  void attachView(IV view){
         this.mView = view;
     }
 }

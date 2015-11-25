@@ -18,7 +18,7 @@ import retrofit.Retrofit;
 /**
  * Created by weix01 on 2015-11-17.
  */
-public class TestPresenter extends Presenter {
+public class TestPresenter extends Presenter<TestMainView> {
 
 
 
@@ -26,7 +26,7 @@ public class TestPresenter extends Presenter {
     public void start() {
         mView.showD();
         GitHubService service = GitHub.getInstance().getServiceImpl(GitHubService.class);
-        final TestMainView mView = (TestMainView) this.mView;
+        final TestMainView mView = this.mView;
         mView.getUser(service, "nyjsl", new Callback<User>() {
             @Override
             public void onResponse(Response<User> response, Retrofit retrofit) {

@@ -6,7 +6,7 @@ import android.content.Context;
  * Base MVP View interface
  * Activity and Fragment should implement this interface
  */
-public interface BaseView {
+public interface IBaseView {
 
     Context getContext();
 
