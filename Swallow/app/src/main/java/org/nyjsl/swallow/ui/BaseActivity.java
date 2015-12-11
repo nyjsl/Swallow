@@ -2,7 +2,10 @@ package org.nyjsl.swallow.ui;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -11,12 +14,15 @@ import android.text.TextUtils;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
+import org.nyjsl.swallow.ActivityStack;
 import org.nyjsl.swallow.Swallow;
 import org.nyjsl.swallow.presenter.Presenter;
 import org.nyjsl.swallow.utils.DialogUtil;
 import org.nyjsl.swallow.utils.MaterialDialogUtil;
 import org.nyjsl.swallow.utils.ToastUtils;
 import org.nyjsl.swallow.views.IBaseView;
+
+import java.lang.ref.WeakReference;
 
 import butterknife.ButterKnife;
 
@@ -32,17 +38,41 @@ public abstract class BaseActivity extends FragmentActivity implements IBaseView
 
     protected Presenter presenter;
 
+    public MyHandler mHandler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
         setContentView(getContentLayout());
         ButterKnife.bind(this);
+        ActivityStack.getActivityStack().addActivity(this);
+        mHandler = new MyHandler(this);
         supportFragmentManager = getSupportFragmentManager();
         setListeners();
         init();
     }
 
+
+    private static class MyHandler extends Handler {
+
+        WeakReference<BaseActivity> mReference = null;
+
+        MyHandler(BaseActivity activity) {
+            this.mReference = new WeakReference<BaseActivity>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            BaseActivity outer = mReference.get();
+            if (outer == null && outer.isFinishing()) {
+                return;
+            }
+
+            outer.handleMessage(msg);
+        }
+    }
+    public abstract void handleMessage(Message msg);
     /**
      * sub class should call this method andd
      * pass a sub Presenter
@@ -103,6 +133,25 @@ public abstract class BaseActivity extends FragmentActivity implements IBaseView
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    protected  void jumpForResult(Class<? extends BaseActivity> klazz,int requestCode,Bundle bundle){
+        Intent intent = new Intent(mContext,klazz);
+        if(null != bundle)
+            intent.putExtras(bundle);
+        startActivityForResult(intent, requestCode);
+    }
+
+    protected void jump(Class<? extends BaseActivity> klazz){
+        jump(klazz,false,null);
+    }
+    protected void jump(Class<? extends BaseActivity> klazz,boolean finish,Bundle bundle){
+        Intent intent = new Intent(mContext,klazz);
+        if(null != bundle)
+            intent.putExtras(bundle);
+        startActivity(intent);
+        if(finish)
+            finish();
     }
 
     /**
@@ -203,9 +252,11 @@ public abstract class BaseActivity extends FragmentActivity implements IBaseView
 
     @Override
     protected void onDestroy() {
+        if (mHandler != null) mHandler.removeCallbacksAndMessages(null);
         super.onDestroy();
         dismissProgressDialog();
         ButterKnife.unbind(this);
+        ActivityStack.getActivityStack().finishActivity(this);
     }
 
     protected void dismissProgressDialog(){

@@ -1,5 +1,6 @@
 package org.nyjsl.swallow.test;
 
+import android.os.Message;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,6 +28,11 @@ public class TestMainActivity extends BaseActivity implements TestMainView {
     @Bind(R.id.avatar) ImageView avatar;
 
     private TestPresenter presenter;
+
+    @Override
+    public void handleMessage(Message msg) {
+
+    }
 
     @Override
     protected int getContentLayout() {

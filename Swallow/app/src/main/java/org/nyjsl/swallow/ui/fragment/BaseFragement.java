@@ -2,6 +2,7 @@ package org.nyjsl.swallow.ui.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import org.nyjsl.swallow.Swallow;
+import org.nyjsl.swallow.ui.BaseActivity;
 import org.nyjsl.swallow.utils.DialogUtil;
 import org.nyjsl.swallow.utils.MaterialDialogUtil;
 import org.nyjsl.swallow.utils.ToastUtils;
@@ -80,6 +82,18 @@ public abstract class BaseFragement extends Fragment  {
     protected abstract void init();
 
     protected abstract void setListeners();
+
+    protected void jump(Class<? extends BaseActivity> klazz){
+        jump(klazz,false,null);
+    }
+    protected void jump(Class<? extends BaseActivity> klazz,boolean finish,Bundle bundle){
+        Intent intent = new Intent(mContext,klazz);
+        if(null != bundle)
+            intent.putExtras(bundle);
+        startActivity(intent);
+        if(finish)
+            getActivity().finish();
+    }
 
     /**
      * show system toast duration long
