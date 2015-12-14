@@ -9,6 +9,7 @@ import org.nyjsl.swallow.R;
 import org.nyjsl.swallow.Swallow;
 import org.nyjsl.swallow.presenter.TestPresenter;
 import org.nyjsl.swallow.ui.BaseActivity;
+import org.nyjsl.swallow.utils.NetWorkUtil;
 import org.nyjsl.swallow.views.TestMainView;
 
 import butterknife.Bind;
@@ -49,6 +50,16 @@ public class TestMainActivity extends BaseActivity implements TestMainView {
         presenter = new TestPresenter();
         bindPresenter(presenter);
 
+    }
+
+    @Override
+    public void onConnect(NetWorkUtil.NetType type) {
+        showToast(type.name());
+    }
+
+    @Override
+    public void onDisConnect() {
+        showToast("断网咯");
     }
 
     @OnClick(R.id.change)

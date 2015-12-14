@@ -17,8 +17,10 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import org.nyjsl.swallow.ActivityStack;
 import org.nyjsl.swallow.Swallow;
 import org.nyjsl.swallow.presenter.Presenter;
+import org.nyjsl.swallow.receivers.NetworkStateReceiver;
 import org.nyjsl.swallow.utils.DialogUtil;
 import org.nyjsl.swallow.utils.MaterialDialogUtil;
+import org.nyjsl.swallow.utils.NetWorkUtil;
 import org.nyjsl.swallow.utils.ToastUtils;
 import org.nyjsl.swallow.views.IBaseView;
 
@@ -44,6 +46,7 @@ public abstract class BaseActivity extends FragmentActivity implements IBaseView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
+        NetworkStateReceiver.register(this);
         setContentView(getContentLayout());
         ButterKnife.bind(this);
         ActivityStack.getActivityStack().addActivity(this);
@@ -52,6 +55,8 @@ public abstract class BaseActivity extends FragmentActivity implements IBaseView
         setListeners();
         init();
     }
+
+
 
 
     private static class MyHandler extends Handler {
@@ -143,7 +148,7 @@ public abstract class BaseActivity extends FragmentActivity implements IBaseView
     }
 
     protected void jump(Class<? extends BaseActivity> klazz){
-        jump(klazz,false,null);
+        jump(klazz, false, null);
     }
     protected void jump(Class<? extends BaseActivity> klazz,boolean finish,Bundle bundle){
         Intent intent = new Intent(mContext,klazz);
@@ -256,6 +261,7 @@ public abstract class BaseActivity extends FragmentActivity implements IBaseView
         super.onDestroy();
         dismissProgressDialog();
         ButterKnife.unbind(this);
+        NetworkStateReceiver.unRegister(this);
         ActivityStack.getActivityStack().finishActivity(this);
     }
 
@@ -290,4 +296,7 @@ public abstract class BaseActivity extends FragmentActivity implements IBaseView
             }
         });
     }
+
+    public abstract void onConnect(NetWorkUtil.NetType type);
+    public abstract void onDisConnect();
 }
