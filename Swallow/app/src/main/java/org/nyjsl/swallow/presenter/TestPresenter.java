@@ -1,14 +1,19 @@
 package org.nyjsl.swallow.presenter;
 
+import android.app.ActivityManager;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.squareup.picasso.Picasso;
 
 import org.nyjsl.swallow.test.GitHub;
 import org.nyjsl.swallow.test.GitHubService;
 import org.nyjsl.swallow.test.User;
 import org.nyjsl.swallow.views.TestMainView;
+
+import java.util.List;
 
 import retrofit.Call;
 import retrofit.Callback;
@@ -21,6 +26,7 @@ import retrofit.Retrofit;
 public class TestPresenter extends Presenter<TestMainView> {
 
 
+    private ArrayAdapter<String> adapter;
 
     @Override
     public void start() {
@@ -52,6 +58,48 @@ public class TestPresenter extends Presenter<TestMainView> {
         tv.setText(user.getLogin());
         Picasso.with(mView.getContext()).load(user.getAvatar_url()).into(img);
     }
+
+    public void bind(PullToRefreshListView lv,List<ActivityManager.RunningServiceInfo> serviceInfos){
+        if(null != serviceInfos){
+
+            adapter = new ArrayAdapter<String>(mView.getContext(),android.R.layout.simple_expandable_list_item_1);
+            for(ActivityManager.RunningServiceInfo s: serviceInfos){
+                adapter.add("process :" + s.process + " started:" + s.started + "class:" + s.service.getClassName());
+            }
+            lv.getRefreshableView().setAdapter(adapter);
+        }
+    }
+
+    public void refresh(final PullToRefreshListView lv,List<ActivityManager.RunningServiceInfo> serviceInfos){
+
+        bind(lv, serviceInfos);
+        lv.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                lv.onRefreshComplete();
+            }
+        },1000);
+    }
+
+    public void loadMore(final PullToRefreshListView lv,List<ActivityManager.RunningServiceInfo> serviceInfos){
+        if(null == adapter){
+            refresh(lv, serviceInfos);
+        }else{
+            for(ActivityManager.RunningServiceInfo s: serviceInfos){
+                adapter.add("process :" + s.process + " started:" + s.started + "class:" + s.service.getClassName());
+            }
+            adapter.notifyDataSetChanged();
+        }
+        lv.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                lv.onRefreshComplete();
+            }
+        }, 1000);
+
+    }
+
+
 
     @Override
     public void stop() {

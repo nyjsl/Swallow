@@ -14,4 +14,8 @@ public interface TestMainView  extends IBaseView {
 
     void bindUser(User user);
 
+    void getRunningProcesses();
+
+    void initPtrFrame();
+
 }

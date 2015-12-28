@@ -1,1 +1,3 @@
 include ':app', ':wishlist', ':commons', ':core', ':daogenerater'
+
+include ':ptrlibrary'
