@@ -27,22 +27,42 @@
         android:id="@+id/avatar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/show"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="shows"/>
+        <Button
+            android:id="@+id/change"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="switch"/>
+        <Button
+            android:id="@+id/duang"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="duang"/>
+        <Button
+            android:id="@+id/camera"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="camera"/>
+        <Button
+            android:id="@+id/location"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="location"/>
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/show"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="show"/>
-    <Button
-        android:id="@+id/change"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="switch"/>
-    <Button
-        android:id="@+id/duang"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="duang"/>
 
         <com.handmark.pulltorefresh.library.PullToRefreshListView
             android:id="@+id/lv"

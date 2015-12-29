@@ -1,8 +1,10 @@
 package org.nyjsl.swallow.test;
 
+import android.Manifest;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.os.Message;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -22,23 +24,31 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
 import retrofit.Callback;
 
 
-public class TestMainActivity extends BaseActivity implements TestMainView {
+public class TestMainActivity extends BaseActivity implements TestMainView,EasyPermissions.PermissionCallbacks {
 
+    private static final String TAG = "TestMainActivity";
 
     @Bind(R.id.test_tv) TextView  test_tv;
     @Bind(R.id.tv_test) TextView  tv_test;
     @Bind(R.id.show)  Button show;
     @Bind(R.id.change) Button  change;
     @Bind(R.id.duang) Button  duang;
+    @Bind(R.id.camera) Button  camera;
+    @Bind(R.id.location) Button  location;
 
     @Bind(R.id.lv) PullToRefreshListView ptr;
 
     @Bind(R.id.avatar) ImageView avatar;
 
     private TestPresenter presenter;
+
+    private static final int RC_CAMERA_PERM = 123;
+    private static final int RC_LOCATION_CONTACTS_PERM = 124;
 
 
     @Override
@@ -84,6 +94,28 @@ public class TestMainActivity extends BaseActivity implements TestMainView {
         replaceFragment(R.id.container, TestFragment.newInstance());
     }
 
+    @OnClick(R.id.camera)
+    @AfterPermissionGranted(RC_CAMERA_PERM)
+    void camera(){
+        if(EasyPermissions.hasPermissions(mContext, android.Manifest.permission.CAMERA)){
+            showToast("Camera Camera");
+        }else{
+            EasyPermissions.requestPermissions(this,getString(R.string.rationale_camera),RC_CAMERA_PERM, Manifest.permission.CAMERA);
+        }
+    }
+
+    @OnClick(R.id.location)
+    @AfterPermissionGranted(RC_LOCATION_CONTACTS_PERM)
+    void location(){
+        String[] perms = { Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_CONTACTS };
+        if (EasyPermissions.hasPermissions(this, perms)) {
+            showToast("Location Contacts");
+        } else {
+            // Ask for both permissions
+            EasyPermissions.requestPermissions(this, getString(R.string.rationale_location_contacts),RC_LOCATION_CONTACTS_PERM, perms);
+        }
+    }
+
     @Override
     public void getUser(GitHubService service, String user, Callback<User> callback) {
         presenter.requestUser(service, user, callback);
@@ -127,5 +159,20 @@ public class TestMainActivity extends BaseActivity implements TestMainView {
         });
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        // EasyPermissions handles the request result.
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
 
+    @Override
+    public void onPermissionsGranted(List<String> perms) {
+        Log.d(TAG, "onPermissionsGranted:" + perms.size());
+    }
+
+    @Override
+    public void onPermissionsDenied(List<String> perms) {
+        Log.d(TAG, "onPermissionsDenied:" + perms.size());
+    }
 }
