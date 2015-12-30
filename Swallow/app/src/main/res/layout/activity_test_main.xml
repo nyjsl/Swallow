@@ -63,18 +63,22 @@
             android:text="location"/>
     </LinearLayout>
 
-
-        <com.handmark.pulltorefresh.library.PullToRefreshListView
-            android:id="@+id/lv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="@null"
-            android:fadingEdge="none"
-            android:listSelector="@android:color/transparent"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            android:scrollbarStyle="outsideOverlay"
-             />
+    <View
+        android:id="@+id/circle"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_gravity="center"
+        android:background="#E91E63"/>
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:id="@+id/lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:fadingEdge="none"
+        android:listSelector="@android:color/transparent"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:scrollbarStyle="outsideOverlay"/>
 
     <FrameLayout
         android:id="@+id/container"

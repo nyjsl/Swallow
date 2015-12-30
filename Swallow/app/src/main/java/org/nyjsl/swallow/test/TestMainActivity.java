@@ -1,10 +1,15 @@
 package org.nyjsl.swallow.test;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.graphics.Outline;
+import android.os.Build;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewOutlineProvider;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -17,6 +22,7 @@ import org.nyjsl.swallow.R;
 import org.nyjsl.swallow.Swallow;
 import org.nyjsl.swallow.presenter.TestPresenter;
 import org.nyjsl.swallow.ui.BaseActivity;
+import org.nyjsl.swallow.utils.AppUtils;
 import org.nyjsl.swallow.utils.NetWorkUtil;
 import org.nyjsl.swallow.views.TestMainView;
 
@@ -40,10 +46,9 @@ public class TestMainActivity extends BaseActivity implements TestMainView,EasyP
     @Bind(R.id.duang) Button  duang;
     @Bind(R.id.camera) Button  camera;
     @Bind(R.id.location) Button  location;
-
     @Bind(R.id.lv) PullToRefreshListView ptr;
-
     @Bind(R.id.avatar) ImageView avatar;
+    @Bind(R.id.circle) View circle;
 
     private TestPresenter presenter;
 
@@ -70,9 +75,26 @@ public class TestMainActivity extends BaseActivity implements TestMainView,EasyP
 
         presenter = new TestPresenter();
         bindPresenter(presenter);
+        initDragCircle();
         initPtrFrame();
         getRunningProcesses();
 
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void initDragCircle() {
+        if(AppUtils.getSDKVersion()>= Build.VERSION_CODES.LOLLIPOP){
+            circle.setVisibility(View.VISIBLE);
+            circle.setOutlineProvider(new ViewOutlineProvider() {
+                @Override
+                public void getOutline(View view, Outline outline) {
+                    outline.setOval(0,0,view.getWidth(),view.getHeight());
+                }
+            });
+
+        }else{
+            circle.setVisibility(View.GONE);
+        }
     }
 
     @Override
