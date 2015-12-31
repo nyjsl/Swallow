@@ -1,7 +1,6 @@
 package org.nyjsl.swallow.test;
 
 import android.Manifest;
-import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.Outline;
@@ -22,7 +21,6 @@ import org.nyjsl.swallow.R;
 import org.nyjsl.swallow.Swallow;
 import org.nyjsl.swallow.presenter.TestPresenter;
 import org.nyjsl.swallow.ui.BaseActivity;
-import org.nyjsl.swallow.utils.AppUtils;
 import org.nyjsl.swallow.utils.NetWorkUtil;
 import org.nyjsl.swallow.views.TestMainView;
 
@@ -55,7 +53,6 @@ public class TestMainActivity extends BaseActivity implements TestMainView,EasyP
     private static final int RC_CAMERA_PERM = 123;
     private static final int RC_LOCATION_CONTACTS_PERM = 124;
 
-
     @Override
     public void handleMessage(Message msg) {
 
@@ -75,26 +72,32 @@ public class TestMainActivity extends BaseActivity implements TestMainView,EasyP
 
         presenter = new TestPresenter();
         bindPresenter(presenter);
-        initDragCircle();
+        initCircle();
         initPtrFrame();
         getRunningProcesses();
 
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private void initDragCircle() {
-        if(AppUtils.getSDKVersion()>= Build.VERSION_CODES.LOLLIPOP){
+    private void initCircle() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             circle.setVisibility(View.VISIBLE);
             circle.setOutlineProvider(new ViewOutlineProvider() {
                 @Override
                 public void getOutline(View view, Outline outline) {
-                    outline.setOval(0,0,view.getWidth(),view.getHeight());
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        outline.setOval(0, 0, view.getWidth(), view.getHeight());
+                    }
                 }
             });
-
+            circle.setClipToOutline(true);
         }else{
             circle.setVisibility(View.GONE);
         }
+    }
+
+    @OnClick(R.id.circle)
+    void clickCircle(){
+        jump(TestViewDragHelperActivity.class);
     }
 
     @Override

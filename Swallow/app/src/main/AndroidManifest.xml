@@ -28,6 +28,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".test.TestViewDragHelperActivity"/>
+
         <receiver android:name=".receivers.NetworkStateReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />

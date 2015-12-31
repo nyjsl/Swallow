@@ -246,13 +246,15 @@ public abstract class BaseActivity extends FragmentActivity implements IBaseView
     @Override
     protected void onStart() {
         super.onStart();
-        presenter.start();
+        if(null != presenter)
+            presenter.start();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        presenter.stop();
+        if(null != presenter)
+            presenter.stop();
     }
 
     @Override
@@ -299,4 +301,5 @@ public abstract class BaseActivity extends FragmentActivity implements IBaseView
 
     public abstract void onConnect(NetWorkUtil.NetType type);
     public abstract void onDisConnect();
+
 }
