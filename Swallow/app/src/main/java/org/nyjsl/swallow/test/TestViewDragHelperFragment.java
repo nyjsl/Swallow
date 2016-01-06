@@ -1,10 +1,15 @@
 package org.nyjsl.swallow.test;
 
+import android.support.design.widget.Snackbar;
+import android.view.View;
+import android.widget.Button;
+
 import org.nyjsl.swallow.R;
 import org.nyjsl.swallow.ui.fragment.BaseFragement;
 import org.nyjsl.swallow.widgets.MDragFrame;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * Created by weix01 on 2015-12-31.
@@ -12,6 +17,11 @@ import butterknife.Bind;
 public class TestViewDragHelperFragment extends BaseFragement {
 
     @Bind(R.id.drag_frame)  MDragFrame dragFrame;
+
+    @Bind(R.id.circle) View circle;
+
+    @Bind(R.id.raise_bt) Button raise_bt;
+    @Bind(R.id.lower_bt) Button lower_bt;
 
     public static TestViewDragHelperFragment newInstance() {
         TestViewDragHelperFragment fragment = new TestViewDragHelperFragment();
@@ -36,6 +46,28 @@ public class TestViewDragHelperFragment extends BaseFragement {
     @Override
     protected void init() {
         dragFrame.setUp();
+    }
+
+    @OnClick(R.id.raise_bt)
+    void raise(){
+        float elevation = 0;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            elevation = circle.getElevation();
+            elevation =  elevation+8;
+            circle.setElevation(elevation);
+            Snackbar.make(raise_bt,elevation+"",Snackbar.LENGTH_SHORT).show();
+        }
+    }
+
+    @OnClick(R.id.lower_bt)
+    void lower(){
+        float elevation = 0;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            elevation = circle.getElevation();
+            elevation =  elevation-8 <0 ? 0:  elevation-8;
+            circle.setElevation(elevation);
+            Snackbar.make(raise_bt,elevation+"",Snackbar.LENGTH_SHORT).show();
+        }
     }
 
 }

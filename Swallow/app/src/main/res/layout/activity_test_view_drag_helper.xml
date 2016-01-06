@@ -10,4 +10,25 @@
         android:layout_height="96dp"
         android:layout_gravity="center"
         android:background="#E91E63"/>
+
+    <LinearLayout
+        android:layout_margin="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
+
+        <Button
+            android:id="@+id/raise_bt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="Z+"/>
+
+        <Button
+            android:id="@+id/lower_bt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="Z-"/>
+    </LinearLayout>
 </org.nyjsl.swallow.widgets.MDragFrame>
