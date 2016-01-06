@@ -55,7 +55,6 @@ public class TestMainActivity extends BaseActivity implements TestMainView,EasyP
 
     @Override
     public void handleMessage(Message msg) {
-
     }
 
     @Override

@@ -7,9 +7,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -28,7 +28,7 @@ import java.lang.ref.WeakReference;
 
 import butterknife.ButterKnife;
 
-public abstract class BaseActivity extends FragmentActivity implements IBaseView {
+public abstract class BaseActivity extends AppCompatActivity implements IBaseView {
 
     protected Context mContext = null;
 

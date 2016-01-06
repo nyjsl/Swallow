@@ -2,4 +2,5 @@
     <string name="app_name">Swallow</string>
     <string name="rationale_camera">This app needs access to your camera so you can take pictures.</string>
     <string name="rationale_location_contacts">This app needs access to your location and contacts to know where and who you are.</string>
+    <string name="title_activity_test_main2">TestMainActivity2</string>
 </resources>

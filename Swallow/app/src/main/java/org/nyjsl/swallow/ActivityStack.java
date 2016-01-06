@@ -43,16 +43,21 @@ public class ActivityStack {
      * 获取当前Activity（堆栈中最后一个压入的）
      */
     public Activity currentActivity() {
-        Activity activity = activityStack.lastElement();
-        return activity;
+        if(null != activityStack){
+            Activity activity = activityStack.lastElement();
+            return activity;
+        }
+        return null;
     }
 
     /**
      * 结束当前Activity（堆栈中最后一个压入的）
      */
     public void finishActivity() {
-        Activity activity = activityStack.lastElement();
-        finishActivity(activity);
+        if(null != activityStack){
+            Activity activity = activityStack.lastElement();
+            finishActivity(activity);
+        }
     }
 
     /**
@@ -60,7 +65,8 @@ public class ActivityStack {
      */
     public void finishActivity(Activity activity) {
         if (activity != null && !activity.isFinishing()) {
-            activityStack.remove(activity);
+            if(null != activityStack)
+                activityStack.remove(activity);
             activity.finish();
             activity = null;
         }
@@ -82,13 +88,15 @@ public class ActivityStack {
      * 结束所有Activity
      */
     public void finishAllActivity() {
-        for (int i = 0, size = activityStack.size(); i < size; i++) {
-            if (null != activityStack.get(i)) {
-                finishActivity(activityStack.get(i));
-                break;
+        if(null != activityStack){
+            for (int i = 0, size = activityStack.size(); i < size; i++) {
+                if (null != activityStack.get(i)) {
+                    finishActivity(activityStack.get(i));
+                    break;
+                }
             }
+            activityStack.clear();
         }
-        activityStack.clear();
     }
 
     /**
