@@ -45,9 +45,12 @@ public class TestMainActivity2 extends BaseActivity {
         LinearLayoutManager manager = new LinearLayoutManager(mContext);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(manager);
+        recyclerView.addItemDecoration(new DrawerAdapter.DividerItemDecoration(mContext,LinearLayoutManager.VERTICAL));
         ArrayList< DrawerAdapter.DrawerItem> items;
         items = new ArrayList<>();
         items.add(new DrawerAdapter.DrawerItem("awesome",android.R.drawable.ic_menu_my_calendar,""));
+        items.add(new DrawerAdapter.DrawerItem("test",android.R.drawable.ic_menu_myplaces,""));
+        items.add(new DrawerAdapter.DrawerItem("test",android.R.drawable.ic_menu_upload,""));
         recyclerView.setAdapter(new DrawerAdapter(mContext,items));
     }
 
