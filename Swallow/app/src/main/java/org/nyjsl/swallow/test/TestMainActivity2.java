@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import org.nyjsl.swallow.R;
 import org.nyjsl.swallow.adapters.DrawerAdapter;
@@ -26,6 +27,7 @@ public class TestMainActivity2 extends BaseActivity {
 
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.fab) FloatingActionButton fab;
+    @Bind(R.id.drawer) LinearLayout drawer;
     @Bind(R.id.drawerlayout) DrawerLayout drawerLayout;
 
     @Bind(R.id.left_drawer_rc) RecyclerView recyclerView;
@@ -85,6 +87,14 @@ public class TestMainActivity2 extends BaseActivity {
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
 
+    }
+
+    public void closeDrawer(){
+        if(null != drawerLayout){
+            if(drawerLayout.isDrawerOpen(drawer)){
+                drawerLayout.closeDrawer(drawer);
+            }
+        }
     }
 
     @OnClick(R.id.fab)

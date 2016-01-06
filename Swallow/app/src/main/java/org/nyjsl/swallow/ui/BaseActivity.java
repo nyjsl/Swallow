@@ -126,7 +126,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
 
     public void replaceFragment(Fragment fr) {
         FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
-        fragmentTransaction.add(getFragmentContainerId(), fr);
+        fragmentTransaction.replace(getFragmentContainerId(), fr);
         fragmentTransaction.commitAllowingStateLoss();
     }
 
@@ -143,7 +143,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
             e.printStackTrace();
         }
         FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
-        fragmentTransaction.add(getFragmentContainerId(), fr);
+        fragmentTransaction.replace(getFragmentContainerId(), fr);
         fragmentTransaction.commitAllowingStateLoss();
     }
 

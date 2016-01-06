@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.nyjsl.swallow.R;
+import org.nyjsl.swallow.test.TestMainActivity2;
 import org.nyjsl.swallow.ui.BaseActivity;
 import org.nyjsl.swallow.ui.fragment.BaseFragement;
 
@@ -56,6 +57,10 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
                                 BaseActivity activity = (BaseActivity) mContext;
                                 activity.replaceFragment(drawerItem.fragmentKlazz);
                             }
+                        }
+                        if(mContext instanceof TestMainActivity2){
+                            TestMainActivity2 activity = (TestMainActivity2) mContext;
+                            activity.closeDrawer();
                         }
                     }
                 });
