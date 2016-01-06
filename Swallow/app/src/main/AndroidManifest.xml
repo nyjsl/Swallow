@@ -20,7 +20,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".test.TestMainActivity">
         </activity>
-        <activity android:name=".test.TestViewDragHelperActivity" />
+        <activity android:name=".test.TestViewDragHelperFragment" />
 
         <receiver android:name=".receivers.NetworkStateReceiver">
             <intent-filter>

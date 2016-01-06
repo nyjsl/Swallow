@@ -18,6 +18,7 @@ import org.nyjsl.swallow.ActivityStack;
 import org.nyjsl.swallow.Swallow;
 import org.nyjsl.swallow.presenter.Presenter;
 import org.nyjsl.swallow.receivers.NetworkStateReceiver;
+import org.nyjsl.swallow.ui.fragment.BaseFragement;
 import org.nyjsl.swallow.utils.DialogUtil;
 import org.nyjsl.swallow.utils.MaterialDialogUtil;
 import org.nyjsl.swallow.utils.NetWorkUtil;
@@ -57,7 +58,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     }
 
 
-
+    public abstract int getFragmentContainerId();
 
     private static class MyHandler extends Handler {
 
@@ -123,9 +124,26 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
 
     protected  abstract void init();
 
-    protected void replaceFragment(int containerId,Fragment fr) {
+    public void replaceFragment(Fragment fr) {
         FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
-        fragmentTransaction.add(containerId, fr);
+        fragmentTransaction.add(getFragmentContainerId(), fr);
+        fragmentTransaction.commitAllowingStateLoss();
+    }
+
+    public void replaceFragment(Class<? extends BaseFragement> fragmentKlazz){
+        if(null == fragmentKlazz){
+            return ;
+        }
+        BaseFragement fr = null;
+        try {
+            fr = fragmentKlazz.newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
+        fragmentTransaction.add(getFragmentContainerId(), fr);
         fragmentTransaction.commitAllowingStateLoss();
     }
 

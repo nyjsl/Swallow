@@ -35,6 +35,7 @@ public class TestMainActivity2 extends BaseActivity {
         super.onCreate(savedInstanceState);
     }
 
+
     @Override
     protected void init() {
         initDrawer();
@@ -45,13 +46,20 @@ public class TestMainActivity2 extends BaseActivity {
         LinearLayoutManager manager = new LinearLayoutManager(mContext);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(manager);
-        recyclerView.addItemDecoration(new DrawerAdapter.DividerItemDecoration(mContext,LinearLayoutManager.VERTICAL));
+        recyclerView.addItemDecoration(new DrawerAdapter.DividerItemDecoration(mContext, LinearLayoutManager.VERTICAL));
         ArrayList< DrawerAdapter.DrawerItem> items;
         items = new ArrayList<>();
-        items.add(new DrawerAdapter.DrawerItem("awesome",android.R.drawable.ic_menu_my_calendar,""));
-        items.add(new DrawerAdapter.DrawerItem("test",android.R.drawable.ic_menu_myplaces,""));
-        items.add(new DrawerAdapter.DrawerItem("test",android.R.drawable.ic_menu_upload,""));
-        recyclerView.setAdapter(new DrawerAdapter(mContext,items));
+        items.add(new DrawerAdapter.DrawerItem("Awesome",android.R.drawable.ic_menu_my_calendar,TestFragment.class));
+        items.add(new DrawerAdapter.DrawerItem("TestViewDragHelperFragment",android.R.drawable.ic_menu_myplaces,TestViewDragHelperFragment.class));
+        items.add(new DrawerAdapter.DrawerItem("test", android.R.drawable.ic_menu_upload, null));
+        items.add(new DrawerAdapter.DrawerItem("test", android.R.drawable.ic_menu_upload, null));
+        items.add(new DrawerAdapter.DrawerItem("test", android.R.drawable.ic_menu_upload, null));
+        items.add(new DrawerAdapter.DrawerItem("test", android.R.drawable.ic_menu_upload, null));
+        items.add(new DrawerAdapter.DrawerItem("test", android.R.drawable.ic_menu_upload, null));
+        items.add(new DrawerAdapter.DrawerItem("test", android.R.drawable.ic_menu_upload, null));
+        items.add(new DrawerAdapter.DrawerItem("test", android.R.drawable.ic_menu_upload, null));
+        items.add(new DrawerAdapter.DrawerItem("test", android.R.drawable.ic_menu_upload, null));
+        recyclerView.setAdapter(new DrawerAdapter(mContext, items));
     }
 
 
@@ -92,6 +100,11 @@ public class TestMainActivity2 extends BaseActivity {
     @Override
     protected int getContentLayout() {
         return R.layout.activity_test_main2;
+    }
+
+    @Override
+    public int getFragmentContainerId() {
+        return R.id.fragment_container;
     }
 
     @Override

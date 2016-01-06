@@ -7,7 +7,6 @@ import android.graphics.Outline;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Build;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
@@ -18,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.nyjsl.swallow.R;
+import org.nyjsl.swallow.ui.BaseActivity;
+import org.nyjsl.swallow.ui.fragment.BaseFragement;
 
 import java.util.ArrayList;
 
@@ -43,14 +44,19 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         if(null != items){
-            DrawerItem drawerItem = items.get(position);
+            final DrawerItem drawerItem = items.get(position);
             if(null != drawerItem){
                 holder.img.setImageResource(drawerItem.imgId);
                 holder.text.setText(drawerItem.text);
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Snackbar.make(v ,""+position,Snackbar.LENGTH_LONG).show();
+                        if(null != drawerItem.fragmentKlazz){
+                            if(mContext instanceof BaseActivity){
+                                BaseActivity activity = (BaseActivity) mContext;
+                                activity.replaceFragment(drawerItem.fragmentKlazz);
+                            }
+                        }
                     }
                 });
             }
@@ -90,16 +96,16 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
     public static class DrawerItem {
         public String text;
         public int imgId;
-        public String fragmentClassName;
+        public Class<? extends BaseFragement> fragmentKlazz;
 
         public DrawerItem() {
 
         }
 
-        public DrawerItem(String text, int imgId, String fragmentClassName) {
+        public DrawerItem(String text, int imgId, Class fragmentKlazz) {
             this.text = text;
             this.imgId = imgId;
-            this.fragmentClassName = fragmentClassName;
+            this.fragmentKlazz = fragmentKlazz;
         }
     }
 

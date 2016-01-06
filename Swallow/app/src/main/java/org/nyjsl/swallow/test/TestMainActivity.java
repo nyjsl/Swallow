@@ -53,6 +53,7 @@ public class TestMainActivity extends BaseActivity implements TestMainView,EasyP
     private static final int RC_CAMERA_PERM = 123;
     private static final int RC_LOCATION_CONTACTS_PERM = 124;
 
+
     @Override
     public void handleMessage(Message msg) {
     }
@@ -62,6 +63,10 @@ public class TestMainActivity extends BaseActivity implements TestMainView,EasyP
         return R.layout.activity_test_main;
     }
 
+    @Override
+    public int getFragmentContainerId() {
+        return R.id.container;
+    }
 
     @Override
     protected void setListeners() {}
@@ -94,11 +99,6 @@ public class TestMainActivity extends BaseActivity implements TestMainView,EasyP
         }
     }
 
-    @OnClick(R.id.circle)
-    void clickCircle(){
-        jump(TestViewDragHelperActivity.class);
-    }
-
     @Override
     public void onConnect(NetWorkUtil.NetType type) {
         showToast(type.name());
@@ -115,7 +115,7 @@ public class TestMainActivity extends BaseActivity implements TestMainView,EasyP
     }
     @OnClick(R.id.duang)
     void duang(){
-        replaceFragment(R.id.container, TestFragment.newInstance());
+        replaceFragment(TestFragment.newInstance());
     }
 
     @OnClick(R.id.camera)

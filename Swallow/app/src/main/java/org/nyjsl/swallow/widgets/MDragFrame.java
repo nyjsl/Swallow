@@ -37,7 +37,7 @@ public class MDragFrame extends FrameLayout {
     }
 
     public MDragFrame(Context context, AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, 0, 0);
+        super(context, attrs, 0);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)

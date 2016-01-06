@@ -12,4 +12,8 @@
     tools:context="org.nyjsl.swallow.test.TestMainActivity2"
     tools:showIn="@layout/activity_test_main2">
 
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></FrameLayout>
 </RelativeLayout>
