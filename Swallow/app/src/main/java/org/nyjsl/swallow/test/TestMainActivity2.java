@@ -56,7 +56,7 @@ public class TestMainActivity2 extends BaseActivity {
         items.add(new DrawerAdapter.DrawerItem(android.R.drawable.ic_menu_my_calendar,TestFragment.class));
         items.add(new DrawerAdapter.DrawerItem(android.R.drawable.ic_menu_myplaces,TestViewDragHelperFragment.class));
         items.add(new DrawerAdapter.DrawerItem(android.R.drawable.ic_menu_upload, TestCardViewFragment.class));
-        items.add(new DrawerAdapter.DrawerItem("test", android.R.drawable.ic_menu_upload, null));
+        items.add(new DrawerAdapter.DrawerItem( android.R.drawable.ic_menu_agenda, TestActionModeFragment.class));
         items.add(new DrawerAdapter.DrawerItem("test", android.R.drawable.ic_menu_upload, null));
         items.add(new DrawerAdapter.DrawerItem("test", android.R.drawable.ic_menu_upload, null));
         items.add(new DrawerAdapter.DrawerItem("test", android.R.drawable.ic_menu_upload, null));
