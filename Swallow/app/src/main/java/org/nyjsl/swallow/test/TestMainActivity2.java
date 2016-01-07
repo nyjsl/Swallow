@@ -42,6 +42,8 @@ public class TestMainActivity2 extends BaseActivity {
     protected void init() {
         initDrawer();
         initRecyclerView();
+
+        replaceFragment(TestCardViewFragment.class);
     }
 
     private void initRecyclerView() {
@@ -51,9 +53,9 @@ public class TestMainActivity2 extends BaseActivity {
         recyclerView.addItemDecoration(new DrawerAdapter.DividerItemDecoration(mContext, LinearLayoutManager.VERTICAL));
         ArrayList< DrawerAdapter.DrawerItem> items;
         items = new ArrayList<>();
-        items.add(new DrawerAdapter.DrawerItem("Awesome",android.R.drawable.ic_menu_my_calendar,TestFragment.class));
-        items.add(new DrawerAdapter.DrawerItem("TestViewDragHelperFragment",android.R.drawable.ic_menu_myplaces,TestViewDragHelperFragment.class));
-        items.add(new DrawerAdapter.DrawerItem("test", android.R.drawable.ic_menu_upload, null));
+        items.add(new DrawerAdapter.DrawerItem(android.R.drawable.ic_menu_my_calendar,TestFragment.class));
+        items.add(new DrawerAdapter.DrawerItem(android.R.drawable.ic_menu_myplaces,TestViewDragHelperFragment.class));
+        items.add(new DrawerAdapter.DrawerItem(android.R.drawable.ic_menu_upload, TestCardViewFragment.class));
         items.add(new DrawerAdapter.DrawerItem("test", android.R.drawable.ic_menu_upload, null));
         items.add(new DrawerAdapter.DrawerItem("test", android.R.drawable.ic_menu_upload, null));
         items.add(new DrawerAdapter.DrawerItem("test", android.R.drawable.ic_menu_upload, null));

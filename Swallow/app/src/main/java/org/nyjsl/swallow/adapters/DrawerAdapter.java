@@ -9,6 +9,7 @@ import android.graphics.Rect;
 import android.os.Build;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +40,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(View.inflate(parent.getContext(), R.layout.drawer_rv_item,null));
+        return new ViewHolder(View.inflate(parent.getContext(), R.layout.item_rv_drawer,null));
     }
 
     @Override
@@ -48,7 +49,11 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
             final DrawerItem drawerItem = items.get(position);
             if(null != drawerItem){
                 holder.img.setImageResource(drawerItem.imgId);
-                holder.text.setText(drawerItem.text);
+                if(!TextUtils.isEmpty(drawerItem.text)){
+                    holder.text.setText(drawerItem.text);
+                }else {
+                    holder.text.setText(drawerItem.fragmentKlazz.getSimpleName());
+                }
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -105,6 +110,11 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
 
         public DrawerItem() {
 
+        }
+
+        public DrawerItem(int imgId, Class fragmentKlazz) {
+            this.imgId = imgId;
+            this.fragmentKlazz = fragmentKlazz;
         }
 
         public DrawerItem(String text, int imgId, Class fragmentKlazz) {

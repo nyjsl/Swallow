@@ -40,7 +40,7 @@ public class TestViewDragHelperFragment extends BaseFragement {
 
     @Override
     protected int getFragmentLayout() {
-        return R.layout.activity_test_view_drag_helper;
+        return R.layout.fragment_test_view_drag_helper;
     }
 
     @Override
